@@ -79,12 +79,12 @@ namespace Yatzy
 
         public int GetScoreSmallStraight()
         {
-            return GetScoreStraight(1, 5);
+            return new StraightScorer(_dice, 1, 5).Get();
         }
 
         public int GetScoreLargeStraight()
         {
-            return GetScoreStraight(2, 6);
+            return new StraightScorer(_dice, 2, 6).Get();
         }
 
         public int GetScoreFullHouse()
@@ -95,22 +95,6 @@ namespace Yatzy
                 return GetScoreOnePair() + GetScoreThreeOfAKind();
 
             return 0;
-        }
-
-        private int GetScoreStraight(int lowerDieValue,
-            int higherDieValue)
-        {
-            var sum = 0;
-
-            for (var dieValue = lowerDieValue; dieValue <= higherDieValue; dieValue++)
-            {
-                if (_dice.CountOccurrences()[dieValue] != 1)
-                    return 0;
-
-                sum += dieValue;
-            }
-
-            return sum;
         }
 
         private bool IsApplicable(int numberElementsInGroup,
