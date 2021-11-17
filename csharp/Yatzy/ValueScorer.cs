@@ -10,18 +10,7 @@ namespace Yatzy
 
         public override int Get()
         {
-            return CountForValue(_dieValue) * _dieValue;
+            return _dice.CountForValue(_dieValue) * _dieValue;
         }
-
-        private int CountForValue(int value)
-        {
-            var count = 0;
-            foreach (var die in _dice)
-                if (die == value)
-                    count++;
-
-            return count;
-        }
-
     }
 }

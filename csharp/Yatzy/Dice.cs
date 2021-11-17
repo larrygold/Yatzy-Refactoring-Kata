@@ -37,6 +37,16 @@ namespace Yatzy
 
             return groups;
         }
+        public int CountForValue(int value)
+        {
+            var count = 0;
+            foreach (var die in _dice)
+                if (die == value)
+                    count++;
+
+            return count;
+        }
+
 
         public IEnumerator<int> GetEnumerator()
         {
