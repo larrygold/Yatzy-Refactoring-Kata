@@ -61,22 +61,33 @@ namespace Yatzy
 
         public static int GetScoreOnePair(int d1, int d2, int d3, int d4, int d5)
         {
-            return GetScoreGroupsOf(d1, d2, d3, d4, d5, 2, 1);
+            if(IsApplicable(d1, d2, d3, d4, d5, 2, 1))
+                return GetScoreGroupsOf(d1, d2, d3, d4, d5, 2, 1);
+            return 0;
         }
 
         public static int GetScoreTwoPairs(int d1, int d2, int d3, int d4, int d5)
         {
-            return GetScoreGroupsOf(d1, d2, d3, d4, d5, 2, 2);
+            if (IsApplicable(d1, d2, d3, d4, d5, 2, 2))
+                return GetScoreGroupsOf(d1, d2, d3, d4, d5, 2, 2);
+
+            return 0;
         }
 
         public static int FourOfAKind(int d1, int d2, int d3, int d4, int d5)
         {
-            return GetScoreGroupsOf(d1, d2, d3, d4, d5, 4, 1);
+            if (IsApplicable(d1, d2, d3, d4, d5, 4, 1))
+                return GetScoreGroupsOf(d1, d2, d3, d4, d5, 4, 1);
+
+            return 0;
         }
 
         public static int ThreeOfAKind(int d1, int d2, int d3, int d4, int d5)
         {
-            return GetScoreGroupsOf(d1, d2, d3, d4, d5, 3, 1);
+            if (IsApplicable(d1, d2, d3, d4, d5, 3, 1))
+                return GetScoreGroupsOf(d1, d2, d3, d4, d5, 3, 1);
+            
+            return 0;
         }
 
         public static int SmallStraight(int d1, int d2, int d3, int d4, int d5)
@@ -91,6 +102,14 @@ namespace Yatzy
 
         public static int FullHouse(int d1, int d2, int d3, int d4, int d5)
         {
+            if (IsApplicable(d1, d2, d3, d4, d5, 2, 1)
+                && IsApplicable(d1, d2, d3, d4, d5, 3, 1)
+                ) 
+                return GetScoreOnePair(d1, d2, d3, d4, d5) + ThreeOfAKind(d1, d2, d3, d4, d5);
+
+            return 0;
+
+            /*
             int[] tallies;
             var _2 = false;
             int i;
@@ -123,6 +142,7 @@ namespace Yatzy
             if (_2 && _3)
                 return _2_at * 2 + _3_at * 3;
             return 0;
+        */
         }
 
         private static int[] CountDiceOccurrences(int[] dice)
@@ -201,6 +221,14 @@ namespace Yatzy
             }
 
             return sum;
+        }
+
+        private static bool IsApplicable(int d1, int d2, int d3, int d4, int d5, int numberElementsInGroup, int minimumNumberGroups)
+        {
+            var dice = CreateDiceArray(d1, d2, d3, d4, d5);
+            var numberDiceWithValue = CountDiceOccurrences(dice);
+            var pairsByDescendingValue = GetDescendingGroupsOf(numberDiceWithValue, numberElementsInGroup);
+            return pairsByDescendingValue.Count() >= minimumNumberGroups;
         }
     }
 }
