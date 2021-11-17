@@ -17,12 +17,12 @@ namespace Yatzy
             return dice.Sum();
         }
 
-        public static int yatzy(params int[] dice)
+        public static int Yams(params int[] dice)
         {
-            var counts = new int[6];
+            var counts = new int[7];
             foreach (var die in dice)
-                counts[die - 1]++;
-            for (var i = 0; i != 6; i++)
+                counts[die]++;
+            for (var i = 1; i <= 6; i++)
                 if (counts[i] == 5)
                     return 50;
             return 0;

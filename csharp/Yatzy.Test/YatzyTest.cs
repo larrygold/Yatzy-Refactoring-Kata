@@ -118,10 +118,10 @@ namespace Yatzy.Test
         public void Yatzy_scores_50()
         {
             var expected = 50;
-            var actual = Yatzy.yatzy(4, 4, 4, 4, 4);
+            var actual = Yatzy.Yams(4, 4, 4, 4, 4);
             Assert.Equal(expected, actual);
-            Assert.Equal(50, Yatzy.yatzy(6, 6, 6, 6, 6));
-            Assert.Equal(0, Yatzy.yatzy(6, 6, 6, 6, 3));
+            Assert.Equal(50, Yatzy.Yams(6, 6, 6, 6, 6));
+            Assert.Equal(0, Yatzy.Yams(6, 6, 6, 6, 3));
         }
     }
 }
