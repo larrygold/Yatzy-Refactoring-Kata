@@ -13,43 +13,43 @@ namespace Yatzy
 
         public static int Chance(int d1, int d2, int d3, int d4, int d5)
         {
-            var dice = new[] {d1, d2, d3, d4, d5};
+            var dice = CreateDiceArray(d1, d2, d3, d4, d5);
             return dice.Sum();
         }
 
         public static int Yams(params int[] dice)
         {
-            var counts = new int[7];
-            foreach (var die in dice)
-                counts[die]++;
-            for (var i = 1; i <= 6; i++)
-                if (counts[i] == 5)
+            var counts = CountDiceOccurrences(dice);
+            foreach (var count in counts)
+            {
+                if (count == 5)
                     return 50;
+            }
             return 0;
         }
 
         public static int Ones(int d1, int d2, int d3, int d4, int d5)
         {
-            var sum = 0;
-            if (d1 == 1) sum++;
-            if (d2 == 1) sum++;
-            if (d3 == 1) sum++;
-            if (d4 == 1) sum++;
-            if (d5 == 1)
-                sum++;
+            var dice = CreateDiceArray(d1, d2, d3, d4, d5);
+            return CountDiceWithValue(dice, 1);
+        }
 
-            return sum;
+        private static int CountDiceWithValue(int[] dice, int value)
+        {
+            var count = 0;
+            foreach (var die in dice)
+            {
+                if (die == value)
+                    count++;
+            }
+
+            return count;
         }
 
         public static int Twos(int d1, int d2, int d3, int d4, int d5)
         {
-            var sum = 0;
-            if (d1 == 2) sum += 2;
-            if (d2 == 2) sum += 2;
-            if (d3 == 2) sum += 2;
-            if (d4 == 2) sum += 2;
-            if (d5 == 2) sum += 2;
-            return sum;
+            var dice = CreateDiceArray(d1, d2, d3, d4, d5);
+            return CountDiceWithValue(dice, 2) * 2;
         }
 
         public static int Threes(int d1, int d2, int d3, int d4, int d5)
@@ -230,6 +230,20 @@ namespace Yatzy
             if (_2 && _3)
                 return _2_at * 2 + _3_at * 3;
             return 0;
+        }
+
+        private static int[] CountDiceOccurrences(int[] dice)
+        {
+            var counts = new int[7];
+            foreach (var die in dice)
+                counts[die]++;
+            return counts;
+        }
+
+        private static int[] CreateDiceArray(int d1, int d2, int d3, int d4, int d5)
+        {
+            var dice = new[] {d1, d2, d3, d4, d5};
+            return dice;
         }
     }
 }
