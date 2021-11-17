@@ -6,11 +6,7 @@ namespace Yatzy
     public class Yatzy
     {
         private readonly int[] _dice;
-        private int d1 => _dice[0];
-        private int d2 => _dice[1];
-        private int d3 => _dice[2];
-        private int d4 => _dice[3];
-        private int d5 => _dice[4];
+
         public Yatzy(int d1, int d2, int d3, int d4, int d5)
         {
             _dice = new[] {d1, d2, d3, d4, d5};
@@ -149,7 +145,7 @@ namespace Yatzy
 
         private int[] CreateDiceArray()
         {
-            var dice = new[] {d1, d2, d3, d4, d5};
+            var dice = new[] {_dice[0], _dice[1], _dice[2], _dice[3], _dice[4]};
             return dice;
         }
 
