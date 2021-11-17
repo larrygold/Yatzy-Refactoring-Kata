@@ -18,10 +18,7 @@ namespace Yatzy
 
         public int GetScoreYams()
         {
-            foreach (var count in _dice.CountOccurrences())
-                if (count == 5)
-                    return 50;
-            return 0;
+            return new YamsScorer(_dice).Get();
         }
 
         public int GetScoreOnes()
