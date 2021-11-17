@@ -138,10 +138,7 @@ namespace Yatzy
 
         private int[] CountDiceOccurrences()
         {
-            var counts = new int[7];
-            foreach (var die in _diceArr)
-                counts[die]++;
-            return counts;
+            return _dice.CountOccurrences();
         }
 
         private int GetScoreForValue(int value)
