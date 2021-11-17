@@ -35,6 +35,18 @@ namespace Yatzy
                 counts[die]++;
             return counts;
         }
+
+        public int CountForValue(int value)
+        {
+            var count = 0;
+            foreach (var die in _dice)
+                if (die == value)
+                    count++;
+
+            return count;
+        }
+
+
     }
 
     public class Yatzy
@@ -47,7 +59,7 @@ namespace Yatzy
         {
             _diceArr = new[] {dice.Die1, dice.Die2, dice.Die3, dice.Die4, dice.Die5};
             _dice = dice;
-            _numberDiceWithValue = CountDiceOccurrences();
+            _numberDiceWithValue = _dice.CountOccurrences();
         }
 
         public int GetScoreChance()
@@ -136,24 +148,9 @@ namespace Yatzy
             return 0;
         }
 
-        private int[] CountDiceOccurrences()
-        {
-            return _dice.CountOccurrences();
-        }
-
         private int GetScoreForValue(int value)
         {
-            return CountDiceWithValue(value) * value;
-        }
-
-        private int CountDiceWithValue(int value)
-        {
-            var count = 0;
-            foreach (var die in _diceArr)
-                if (die == value)
-                    count++;
-
-            return count;
+            return _dice.CountForValue(value) * value;
         }
 
         private int GetScoreGroupsOf(int numberElementsInGroup, int numberGroups)
