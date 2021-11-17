@@ -23,7 +23,7 @@ namespace Yatzy
         public List<int> GetDescendingGroups(int groupSize)
         {
             var groups = new List<int>();
-            var numberDiceWithValue = CountOccurrences();
+            var numberDiceWithValue = _dice.CountOccurrences();
 
             for (var dieValue = 6; dieValue >= 1; dieValue--)
                 if (numberDiceWithValue[dieValue] >= groupSize)
