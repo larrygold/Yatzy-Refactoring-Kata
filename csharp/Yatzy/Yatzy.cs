@@ -13,7 +13,7 @@ namespace Yatzy
 
         public int GetScoreChance()
         {
-            return _dice.GetSum();
+            return new ChanceScorer(_dice).Get();
         }
 
         public int GetScoreYams()
