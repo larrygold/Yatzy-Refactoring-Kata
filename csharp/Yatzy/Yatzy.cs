@@ -166,13 +166,8 @@ namespace Yatzy
 
         private int GetScoreGroupsOf(int numberElementsInGroup, int numberGroups)
         {
-            var pairs = GetDescendingGroupsOf(numberElementsInGroup);
+            var pairs = _dice.GetDescendingGroups(numberElementsInGroup);
             return pairs.Take(numberGroups).Sum(x => numberElementsInGroup * x);
-        }
-
-        private List<int> GetDescendingGroupsOf(int numberElementsInGroup)
-        {
-            return _dice.GetDescendingGroups(numberElementsInGroup);
         }
 
         private int GetScoreStraight(int lowerDieValue,
@@ -194,7 +189,7 @@ namespace Yatzy
         private bool IsApplicable(int numberElementsInGroup,
             int minimumNumberGroups)
         {
-            var groupsByDescendingValue = GetDescendingGroupsOf(numberElementsInGroup);
+            var groupsByDescendingValue = _dice.GetDescendingGroups(numberElementsInGroup);
             return groupsByDescendingValue.Count() >= minimumNumberGroups;
         }
 
