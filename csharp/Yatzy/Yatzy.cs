@@ -81,34 +81,12 @@ namespace Yatzy
 
         public static int SmallStraight(int d1, int d2, int d3, int d4, int d5)
         {
-            var dice = CreateDiceArray(d1, d2, d3, d4, d5);
-            var numberDiceWithValue = CountDiceOccurrences(dice);
-
-            for (var dieValue = 1; dieValue <= 5; dieValue++)
-            {
-                if (numberDiceWithValue[dieValue] != 1)
-                    return 0;
-            }
-
-            return 15;
+            return GetScoreStraight(d1, d2, d3, d4, d5, 1, 5);
         }
 
         public static int LargeStraight(int d1, int d2, int d3, int d4, int d5)
         {
-            int[] tallies;
-            tallies = new int[6];
-            tallies[d1 - 1] += 1;
-            tallies[d2 - 1] += 1;
-            tallies[d3 - 1] += 1;
-            tallies[d4 - 1] += 1;
-            tallies[d5 - 1] += 1;
-            if (tallies[1] == 1 &&
-                tallies[2] == 1 &&
-                tallies[3] == 1 &&
-                tallies[4] == 1
-                && tallies[5] == 1)
-                return 20;
-            return 0;
+            return GetScoreStraight(d1, d2, d3, d4, d5, 2, 6);
         }
 
         public static int FullHouse(int d1, int d2, int d3, int d4, int d5)
@@ -206,6 +184,23 @@ namespace Yatzy
             }
 
             return groups;
+        }
+
+        private static int GetScoreStraight(int d1, int d2, int d3, int d4, int d5, int lowerDieValue, int higherDieValue)
+        {
+            var dice = CreateDiceArray(d1, d2, d3, d4, d5);
+            var numberDiceWithValue = CountDiceOccurrences(dice);
+            var sum = 0;
+
+            for (var dieValue = lowerDieValue; dieValue <= higherDieValue; dieValue++)
+            {
+                if (numberDiceWithValue[dieValue] != 1)
+                    return 0;
+
+                sum += dieValue;
+            }
+
+            return sum;
         }
     }
 }
