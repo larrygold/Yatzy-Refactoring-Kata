@@ -62,6 +62,7 @@ namespace Yatzy
         {
             var dice = CreateDiceArray(d1, d2, d3, d4, d5);
             var numberDiceWithValue = CountDiceOccurrences(dice);
+            
             for (var dieValue = 6; dieValue >= 1; dieValue--)
                 if (numberDiceWithValue[dieValue] >= 2)
                     return (dieValue) * 2;
@@ -70,24 +71,18 @@ namespace Yatzy
 
         public static int TwoPair(int d1, int d2, int d3, int d4, int d5)
         {
-            var counts = new int[6];
-            counts[d1 - 1]++;
-            counts[d2 - 1]++;
-            counts[d3 - 1]++;
-            counts[d4 - 1]++;
-            counts[d5 - 1]++;
-            var n = 0;
-            var score = 0;
-            for (var i = 0; i < 6; i += 1)
-                if (counts[6 - i - 1] >= 2)
-                {
-                    n++;
-                    score += 6 - i;
-                }
+            var dice = CreateDiceArray(d1, d2, d3, d4, d5);
+            var numberDiceWithValue = CountDiceOccurrences(dice);
 
-            if (n == 2)
-                return score * 2;
-            return 0;
+            var numberPairs = 0;
+            var score = 0;
+            for (var dieValue = 6; dieValue >= 1 && numberPairs < 2; dieValue--)
+                if (numberDiceWithValue[dieValue] >= 2)
+                {
+                    score += dieValue * 2;
+                    numberPairs--;
+                }
+            return score;
         }
 
         public static int FourOfAKind(int _1, int _2, int d3, int d4, int d5)
