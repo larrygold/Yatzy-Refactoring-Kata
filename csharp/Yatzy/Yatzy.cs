@@ -5,23 +5,12 @@ namespace Yatzy
 {
     public class Dice
     {
-        private int[] _dice;
+        private readonly int[] _dice;
 
         public Dice(int die1, int die2, int die3, int die4, int die5)
         {
-            Die1 = die1;
-            Die2 = die2;
-            Die3 = die3;
-            Die4 = die4;
-            Die5 = die5;
-            _dice = new[] {Die1, Die2, Die3, Die4, Die5};
+            _dice = new[] {die1, die2, die3, die4, die5};
         }
-
-        public int Die1 { get; private set; }
-        public int Die2 { get; private set; }
-        public int Die3 { get; private set; }
-        public int Die4 { get; private set; }
-        public int Die5 { get; private set; }
 
         public int GetSum()
         {
@@ -64,12 +53,10 @@ namespace Yatzy
 
     public class Yatzy
     {
-        private readonly int[] _diceArr;
         private Dice _dice;
 
         public Yatzy(Dice dice)
         {
-            _diceArr = new[] {dice.Die1, dice.Die2, dice.Die3, dice.Die4, dice.Die5};
             _dice = dice;
         }
 
