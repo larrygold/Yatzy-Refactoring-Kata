@@ -1,100 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Yatzy
 {
-    public class ValueScorer : Score
-    {
-        private int _dieValue;
-        public ValueScorer(Dice dice, int dieValue) : base(dice)
-        {
-            _dieValue = dieValue;
-        }
-
-        public override int Get()
-        {
-            return CountForValue(_dieValue) * _dieValue;
-        }
-
-        private int CountForValue(int value)
-        {
-            var count = 0;
-            foreach (var die in _dice)
-                if (die == value)
-                    count++;
-
-            return count;
-        }
-
-    }
-
-    public abstract class Score
-    {
-        protected Dice _dice;
-        public Score(Dice dice)
-        {
-            _dice = dice;
-        }
-
-        public abstract int Get();
-    }
-
-    public class Dice : IEnumerable<int>
-    {
-        private readonly List<int> _dice;
-
-        public Dice(int die1, int die2, int die3, int die4, int die5)
-        {
-            _dice = new List<int> () {die1, die2, die3, die4, die5};
-        }
-
-        public int GetSum()
-        {
-            return _dice.Sum();
-        }
-
-        public int[] CountOccurrences()
-        {
-            var counts = new int[7];
-            foreach (var die in _dice)
-                counts[die]++;
-            return counts;
-        }
-
-        public int CountForValue(int value)
-        {
-            var count = 0;
-            foreach (var die in _dice)
-                if (die == value)
-                    count++;
-
-            return count;
-        }
-
-        public List<int> GetDescendingGroups(int groupSize)
-        {
-            var groups = new List<int>();
-            var numberDiceWithValue = CountOccurrences();
-
-            for (var dieValue = 6; dieValue >= 1; dieValue--)
-                if (numberDiceWithValue[dieValue] >= groupSize)
-                    groups.Add(dieValue);
-
-            return groups;
-        }
-
-        public IEnumerator<int> GetEnumerator()
-        {
-            return _dice.GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
-    }
-
     public class Yatzy
     {
         private readonly Dice _dice;
@@ -124,27 +31,27 @@ namespace Yatzy
 
         public int GetScoreTwos()
         {
-            return GetScoreForValue(2);
+            return new ValueScorer(_dice, 2).Get();
         }
 
         public int GetScoreThrees()
         {
-            return GetScoreForValue(3);
+            return new ValueScorer(_dice, 3).Get();
         }
 
         public int GetScoreFours()
         {
-            return GetScoreForValue(4);
+            return new ValueScorer(_dice, 4).Get();
         }
 
         public int GetScoreFives()
         {
-            return GetScoreForValue(5);
+            return new ValueScorer(_dice, 5).Get();
         }
 
         public int GetScoreSixes()
         {
-            return GetScoreForValue(6);
+            return new ValueScorer(_dice, 6).Get();
         }
 
         public int GetScoreOnePair()
@@ -188,11 +95,6 @@ namespace Yatzy
                 return GetScoreOnePair() + GetScoreThreeOfAKind();
 
             return 0;
-        }
-
-        private int GetScoreForValue(int value)
-        {
-            return _dice.CountForValue(value) * value;
         }
 
         private int GetScoreGroupsOf(int numberElementsInGroup, int numberGroups)
