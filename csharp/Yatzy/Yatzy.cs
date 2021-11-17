@@ -63,26 +63,36 @@ namespace Yatzy
         {
             var dice = CreateDiceArray(d1, d2, d3, d4, d5);
             var numberDiceWithValue = CountDiceOccurrences(dice);
-            
-            for (var dieValue = 6; dieValue >= 1; dieValue--)
-                if (numberDiceWithValue[dieValue] >= 2)
-                    return (dieValue) * 2;
-            return 0;
+
+            return GetScorePairs(numberDiceWithValue, 1);
         }
 
         public static int TwoPair(int d1, int d2, int d3, int d4, int d5)
         {
             var dice = CreateDiceArray(d1, d2, d3, d4, d5);
             var numberDiceWithValue = CountDiceOccurrences(dice);
+            return GetScorePairs(numberDiceWithValue, 2);
+        }
 
+        private static int GetScorePairs(int[] numberDiceWithValue, int numberPairs)
+        {
+            var pairs = GetPairsDescending(numberDiceWithValue);
+            return pairs.Take(numberPairs).Sum(x => 2 * x);
+        }
+
+        private static List<int> GetPairsDescending(int[] numberDiceWithValue)
+        {
             var pairs = new List<int>();
-            for (var dieValue = 6; dieValue >= 1 && pairs.Count() < 2; dieValue--)
+
+            for (var dieValue = 6; dieValue >= 1; dieValue--)
+            {
                 if (numberDiceWithValue[dieValue] >= 2)
                 {
                     pairs.Add(dieValue);
                 }
+            }
 
-            return pairs.Sum(x => 2 * x);
+            return pairs;
         }
 
         public static int FourOfAKind(int _1, int _2, int d3, int d4, int d5)
