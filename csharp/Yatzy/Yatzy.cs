@@ -75,14 +75,10 @@ namespace Yatzy
             var dice = CreateDiceArray(d1, d2, d3, d4, d5);
             var numberDiceWithValue = CountDiceOccurrences(dice);
 
-            var numberPairs = 0;
-            var score = 0;
             var pairs = new List<int>();
-            for (var dieValue = 6; dieValue >= 1 && numberPairs < 2; dieValue--)
+            for (var dieValue = 6; dieValue >= 1 && pairs.Count() < 2; dieValue--)
                 if (numberDiceWithValue[dieValue] >= 2)
                 {
-                    score += dieValue * 2;
-                    numberPairs--;
                     pairs.Add(dieValue);
                 }
 
