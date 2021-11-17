@@ -56,25 +56,25 @@ namespace Yatzy
 
         public int GetScoreOnePair()
         {
-            return GetScoreGroupsOf(2, 1);
+            return new GroupsScorer(_dice, 1, 2).Get();
         }
 
         public int GetScoreTwoPairs()
         {
             if (IsApplicable(2, 2))
-                return GetScoreGroupsOf(2, 2);
+                return new GroupsScorer(_dice, 2, 2).Get();
 
             return 0;
         }
 
         public int GetScoreThreeOfAKind()
         {
-            return GetScoreGroupsOf(3, 1);
+            return new GroupsScorer(_dice, 1, 3).Get();
         }
 
         public int GetScoreFourOfAKind()
         {
-            return GetScoreGroupsOf(4, 1);
+            return new GroupsScorer(_dice, 1, 4).Get();
         }
 
         public int GetScoreSmallStraight()
@@ -95,12 +95,6 @@ namespace Yatzy
                 return GetScoreOnePair() + GetScoreThreeOfAKind();
 
             return 0;
-        }
-
-        private int GetScoreGroupsOf(int numberElementsInGroup, int numberGroups)
-        {
-            var pairs = _dice.GetDescendingGroups(numberElementsInGroup);
-            return pairs.Take(numberGroups).Sum(x => numberElementsInGroup * x);
         }
 
         private int GetScoreStraight(int lowerDieValue,
