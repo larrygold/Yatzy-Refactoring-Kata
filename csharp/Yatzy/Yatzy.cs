@@ -143,10 +143,9 @@ namespace Yatzy
             return counts;
         }
 
-        private int[] CreateDiceArray()
+        private int GetScoreForValue(int value)
         {
-            var dice = new[] {_dice[0], _dice[1], _dice[2], _dice[3], _dice[4]};
-            return dice;
+            return CountDiceWithValue(value) * value;
         }
 
         private int CountDiceWithValue(int value)
@@ -159,19 +158,9 @@ namespace Yatzy
             return count;
         }
 
-        private int GetScoreForValue(int value)
-        {
-            return CountDiceWithValue(value) * value;
-        }
-
         private int GetScoreGroupsOf(int numberElementsInGroup, int numberGroups)
         {
-            return GetScoreGroupsOf(_numberDiceWithValue, numberElementsInGroup, numberGroups);
-        }
-
-        private int GetScoreGroupsOf(int[] numberDiceWithValue, int numberElementsInGroup, int numberGroups)
-        {
-            var pairs = GetDescendingGroupsOf(numberDiceWithValue, numberElementsInGroup);
+            var pairs = GetDescendingGroupsOf(_numberDiceWithValue, numberElementsInGroup);
             return pairs.Take(numberGroups).Sum(x => numberElementsInGroup * x);
         }
 
