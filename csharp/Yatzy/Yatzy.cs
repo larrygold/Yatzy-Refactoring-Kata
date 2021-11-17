@@ -61,9 +61,7 @@ namespace Yatzy
 
         public static int GetScoreOnePair(int d1, int d2, int d3, int d4, int d5)
         {
-            if(IsApplicable(d1, d2, d3, d4, d5, 2, 1))
-                return GetScoreGroupsOf(d1, d2, d3, d4, d5, 2, 1);
-            return 0;
+            return GetScoreGroupsOf(d1, d2, d3, d4, d5, 2, 1);
         }
 
         public static int GetScoreTwoPairs(int d1, int d2, int d3, int d4, int d5)
@@ -74,38 +72,32 @@ namespace Yatzy
             return 0;
         }
 
-        public static int FourOfAKind(int d1, int d2, int d3, int d4, int d5)
+        public static int GetScoreFourOfAKind(int d1, int d2, int d3, int d4, int d5)
         {
-            if (IsApplicable(d1, d2, d3, d4, d5, 4, 1))
-                return GetScoreGroupsOf(d1, d2, d3, d4, d5, 4, 1);
-
-            return 0;
+            return GetScoreGroupsOf(d1, d2, d3, d4, d5, 4, 1);
         }
 
-        public static int ThreeOfAKind(int d1, int d2, int d3, int d4, int d5)
+        public static int GetScoreThreeOfAKind(int d1, int d2, int d3, int d4, int d5)
         {
-            if (IsApplicable(d1, d2, d3, d4, d5, 3, 1))
-                return GetScoreGroupsOf(d1, d2, d3, d4, d5, 3, 1);
-            
-            return 0;
+            return GetScoreGroupsOf(d1, d2, d3, d4, d5, 3, 1);
         }
 
-        public static int SmallStraight(int d1, int d2, int d3, int d4, int d5)
+        public static int GetScoreSmallStraight(int d1, int d2, int d3, int d4, int d5)
         {
             return GetScoreStraight(d1, d2, d3, d4, d5, 1, 5);
         }
 
-        public static int LargeStraight(int d1, int d2, int d3, int d4, int d5)
+        public static int GetScoreLargeStraight(int d1, int d2, int d3, int d4, int d5)
         {
             return GetScoreStraight(d1, d2, d3, d4, d5, 2, 6);
         }
 
-        public static int FullHouse(int d1, int d2, int d3, int d4, int d5)
+        public static int GetScoreFullHouse(int d1, int d2, int d3, int d4, int d5)
         {
             if (IsApplicable(d1, d2, d3, d4, d5, 2, 1)
                 && IsApplicable(d1, d2, d3, d4, d5, 3, 1)
                 ) 
-                return GetScoreOnePair(d1, d2, d3, d4, d5) + ThreeOfAKind(d1, d2, d3, d4, d5);
+                return GetScoreOnePair(d1, d2, d3, d4, d5) + GetScoreThreeOfAKind(d1, d2, d3, d4, d5);
 
             return 0;
 
