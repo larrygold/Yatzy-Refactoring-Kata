@@ -160,16 +160,16 @@ namespace Yatzy
 
         private int GetScoreGroupsOf(int numberElementsInGroup, int numberGroups)
         {
-            var pairs = GetDescendingGroupsOf(_numberDiceWithValue, numberElementsInGroup);
+            var pairs = GetDescendingGroupsOf(numberElementsInGroup);
             return pairs.Take(numberGroups).Sum(x => numberElementsInGroup * x);
         }
 
-        private List<int> GetDescendingGroupsOf(int[] numberDiceWithValue, int numberElementsInGroup)
+        private List<int> GetDescendingGroupsOf(int numberElementsInGroup)
         {
             var groups = new List<int>();
 
             for (var dieValue = 6; dieValue >= 1; dieValue--)
-                if (numberDiceWithValue[dieValue] >= numberElementsInGroup)
+                if (_numberDiceWithValue[dieValue] >= numberElementsInGroup)
                     groups.Add(dieValue);
 
             return groups;
@@ -198,10 +198,5 @@ namespace Yatzy
             return groupsByDescendingValue.Count() >= minimumNumberGroups;
         }
 
-        private List<int> GetDescendingGroupsOf(int numberElementsInGroup)
-        {
-            var pairsByDescendingValue = GetDescendingGroupsOf(_numberDiceWithValue, numberElementsInGroup);
-            return pairsByDescendingValue;
-        }
     }
 }
