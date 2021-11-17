@@ -46,6 +46,19 @@ namespace Yatzy
             return count;
         }
 
+        public List<int> GetDescendingGroups(int groupSize)
+        {
+            var groups = new List<int>();
+            var numberDiceWithValue = CountOccurrences();
+
+            for (var dieValue = 6; dieValue >= 1; dieValue--)
+                if (numberDiceWithValue[dieValue] >= groupSize)
+                    groups.Add(dieValue);
+
+            return groups;
+        }
+
+
 
     }
 
@@ -53,13 +66,11 @@ namespace Yatzy
     {
         private readonly int[] _diceArr;
         private Dice _dice;
-        private readonly int[] _numberDiceWithValue;
 
         public Yatzy(Dice dice)
         {
             _diceArr = new[] {dice.Die1, dice.Die2, dice.Die3, dice.Die4, dice.Die5};
             _dice = dice;
-            _numberDiceWithValue = _dice.CountOccurrences();
         }
 
         public int GetScoreChance()
@@ -69,7 +80,7 @@ namespace Yatzy
 
         public int GetScoreYams()
         {
-            foreach (var count in _numberDiceWithValue)
+            foreach (var count in _dice.CountOccurrences())
                 if (count == 5)
                     return 50;
             return 0;
@@ -161,13 +172,7 @@ namespace Yatzy
 
         private List<int> GetDescendingGroupsOf(int numberElementsInGroup)
         {
-            var groups = new List<int>();
-
-            for (var dieValue = 6; dieValue >= 1; dieValue--)
-                if (_numberDiceWithValue[dieValue] >= numberElementsInGroup)
-                    groups.Add(dieValue);
-
-            return groups;
+            return _dice.GetDescendingGroups(numberElementsInGroup);
         }
 
         private int GetScoreStraight(int lowerDieValue,
@@ -177,7 +182,7 @@ namespace Yatzy
 
             for (var dieValue = lowerDieValue; dieValue <= higherDieValue; dieValue++)
             {
-                if (_numberDiceWithValue[dieValue] != 1)
+                if (_dice.CountOccurrences()[dieValue] != 1)
                     return 0;
 
                 sum += dieValue;
