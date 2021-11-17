@@ -59,35 +59,14 @@ namespace Yatzy
             return GetScoreForValue(_dice[0], _dice[1], _dice[2], _dice[3], _dice[4], 6);
         }
 
-        public static int GetScorePair(int d1, int d2, int d3, int d4, int d5)
+        public static int GetScoreOnePair(int d1, int d2, int d3, int d4, int d5)
         {
-            return GetScorePairs(d1, d2, d3, d4, d5, 1);
+            return GetScoreGroupsOf(d1, d2, d3, d4, d5, 1, 2);
         }
 
-        public static int TwoPair(int d1, int d2, int d3, int d4, int d5)
+        public static int GetScoreTwoPairs(int d1, int d2, int d3, int d4, int d5)
         {
-            return GetScorePairs(d1, d2, d3, d4, d5, 2);
-        }
-
-        private static int GetScorePairs(int[] numberDiceWithValue, int numberPairs)
-        {
-            var pairs = GetPairsDescending(numberDiceWithValue);
-            return pairs.Take(numberPairs).Sum(x => 2 * x);
-        }
-
-        private static List<int> GetPairsDescending(int[] numberDiceWithValue)
-        {
-            var pairs = new List<int>();
-
-            for (var dieValue = 6; dieValue >= 1; dieValue--)
-            {
-                if (numberDiceWithValue[dieValue] >= 2)
-                {
-                    pairs.Add(dieValue);
-                }
-            }
-
-            return pairs;
+            return GetScoreGroupsOf(d1, d2, d3, d4, d5, 2, 2);
         }
 
         public static int FourOfAKind(int _1, int _2, int d3, int d4, int d5)
@@ -224,11 +203,33 @@ namespace Yatzy
             return CountDiceWithValue(dice, dieValue) * dieValue;
         }
 
-        private static int GetScorePairs(int d1, int d2, int d3, int d4, int d5, int numberPairs)
+        private static int GetScoreGroupsOf(int d1, int d2, int d3, int d4, int d5, int numberPairs,
+            int numberElementsInGroup)
         {
             var dice = CreateDiceArray(d1, d2, d3, d4, d5);
             var numberDiceWithValue = CountDiceOccurrences(dice);
-            return GetScorePairs(numberDiceWithValue, numberPairs);
+            return GetScoreGroupsOf(numberDiceWithValue, numberPairs, numberElementsInGroup);
+        }
+
+        private static int GetScoreGroupsOf(int[] numberDiceWithValue, int numberPairs, int numberElementsInGroup)
+        {
+            var pairs = GetDescendingGroupsOf(numberDiceWithValue, numberElementsInGroup);
+            return pairs.Take(numberPairs).Sum(x => numberElementsInGroup * x);
+        }
+
+        private static List<int> GetDescendingGroupsOf(int[] numberDiceWithValue, int numberElementsInGroup)
+        {
+            var pairs = new List<int>();
+
+            for (var dieValue = 6; dieValue >= 1; dieValue--)
+            {
+                if (numberDiceWithValue[dieValue] >= numberElementsInGroup)
+                {
+                    pairs.Add(dieValue);
+                }
+            }
+
+            return pairs;
         }
     }
 }

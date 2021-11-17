@@ -78,9 +78,9 @@ namespace Yatzy.Test
         [Fact]
         public void one_pair()
         {
-            Assert.Equal(6, Yatzy.GetScorePair(3, 4, 3, 5, 6));
-            Assert.Equal(10, Yatzy.GetScorePair(5, 3, 3, 3, 5));
-            Assert.Equal(12, Yatzy.GetScorePair(5, 3, 6, 6, 5));
+            Assert.Equal(6, Yatzy.GetScoreOnePair(3, 4, 3, 5, 6));
+            Assert.Equal(10, Yatzy.GetScoreOnePair(5, 3, 3, 3, 5));
+            Assert.Equal(12, Yatzy.GetScoreOnePair(5, 3, 6, 6, 5));
         }
 
         [Fact]
@@ -110,8 +110,8 @@ namespace Yatzy.Test
         [Fact]
         public void two_Pair()
         {
-            Assert.Equal(16, Yatzy.TwoPair(3, 3, 5, 4, 5));
-            Assert.Equal(16, Yatzy.TwoPair(3, 3, 5, 5, 5));
+            Assert.Equal(16, Yatzy.GetScoreTwoPairs(3, 3, 5, 4, 5));
+            Assert.Equal(16, Yatzy.GetScoreTwoPairs(3, 3, 5, 5, 5));
         }
 
         [Fact]
