@@ -30,58 +30,27 @@ namespace Yatzy
 
         public static int Ones(int d1, int d2, int d3, int d4, int d5)
         {
-            var dice = CreateDiceArray(d1, d2, d3, d4, d5);
-            return CountDiceWithValue(dice, 1);
-        }
-
-        private static int CountDiceWithValue(int[] dice, int value)
-        {
-            var count = 0;
-            foreach (var die in dice)
-            {
-                if (die == value)
-                    count++;
-            }
-
-            return count;
+            return GetScoreForValue(d1, d2, d3, d4, d5, 1);
         }
 
         public static int Twos(int d1, int d2, int d3, int d4, int d5)
         {
-            var dice = CreateDiceArray(d1, d2, d3, d4, d5);
-            return CountDiceWithValue(dice, 2) * 2;
+            return GetScoreForValue(d1, d2, d3, d4, d5, 2);
         }
 
         public static int Threes(int d1, int d2, int d3, int d4, int d5)
         {
-            int s;
-            s = 0;
-            if (d1 == 3) s += 3;
-            if (d2 == 3) s += 3;
-            if (d3 == 3) s += 3;
-            if (d4 == 3) s += 3;
-            if (d5 == 3) s += 3;
-            return s;
+            return GetScoreForValue(d1, d2, d3, d4, d5, 3);
         }
 
         public int Fours()
         {
-            int sum;
-            sum = 0;
-            for (var at = 0; at != 5; at++)
-                if (_dice[at] == 4)
-                    sum += 4;
-            return sum;
+            return GetScoreForValue(_dice[0], _dice[1], _dice[2], _dice[3], _dice[4], 4);
         }
 
         public int Fives()
         {
-            var s = 0;
-            int i;
-            for (i = 0; i < _dice.Length; i++)
-                if (_dice[i] == 5)
-                    s = s + 5;
-            return s;
+            return GetScoreForValue(_dice[0], _dice[1], _dice[2], _dice[3], _dice[4], 5);
         }
 
         public int sixes()
@@ -244,6 +213,24 @@ namespace Yatzy
         {
             var dice = new[] {d1, d2, d3, d4, d5};
             return dice;
+        }
+
+        private static int CountDiceWithValue(int[] dice, int value)
+        {
+            var count = 0;
+            foreach (var die in dice)
+            {
+                if (die == value)
+                    count++;
+            }
+
+            return count;
+        }
+
+        private static int GetScoreForValue(int d1, int d2, int d3, int d4, int d5, int dieValue)
+        {
+            var dice = CreateDiceArray(d1, d2, d3, d4, d5);
+            return CountDiceWithValue(dice, dieValue) * dieValue;
         }
     }
 }
