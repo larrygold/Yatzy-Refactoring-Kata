@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Yatzy
@@ -76,13 +77,16 @@ namespace Yatzy
 
             var numberPairs = 0;
             var score = 0;
+            var pairs = new List<int>();
             for (var dieValue = 6; dieValue >= 1 && numberPairs < 2; dieValue--)
                 if (numberDiceWithValue[dieValue] >= 2)
                 {
                     score += dieValue * 2;
                     numberPairs--;
+                    pairs.Add(dieValue);
                 }
-            return score;
+
+            return pairs.Sum(x => 2 * x);
         }
 
         public static int FourOfAKind(int _1, int _2, int d3, int d4, int d5)
