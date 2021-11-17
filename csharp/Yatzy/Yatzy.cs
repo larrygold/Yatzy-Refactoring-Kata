@@ -61,17 +61,12 @@ namespace Yatzy
 
         public static int GetScorePair(int d1, int d2, int d3, int d4, int d5)
         {
-            var dice = CreateDiceArray(d1, d2, d3, d4, d5);
-            var numberDiceWithValue = CountDiceOccurrences(dice);
-
-            return GetScorePairs(numberDiceWithValue, 1);
+            return GetScorePairs(d1, d2, d3, d4, d5, 1);
         }
 
         public static int TwoPair(int d1, int d2, int d3, int d4, int d5)
         {
-            var dice = CreateDiceArray(d1, d2, d3, d4, d5);
-            var numberDiceWithValue = CountDiceOccurrences(dice);
-            return GetScorePairs(numberDiceWithValue, 2);
+            return GetScorePairs(d1, d2, d3, d4, d5, 2);
         }
 
         private static int GetScorePairs(int[] numberDiceWithValue, int numberPairs)
@@ -227,6 +222,13 @@ namespace Yatzy
         {
             var dice = CreateDiceArray(d1, d2, d3, d4, d5);
             return CountDiceWithValue(dice, dieValue) * dieValue;
+        }
+
+        private static int GetScorePairs(int d1, int d2, int d3, int d4, int d5, int numberPairs)
+        {
+            var dice = CreateDiceArray(d1, d2, d3, d4, d5);
+            var numberDiceWithValue = CountDiceOccurrences(dice);
+            return GetScorePairs(numberDiceWithValue, numberPairs);
         }
     }
 }
