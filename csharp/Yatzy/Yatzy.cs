@@ -6,21 +6,25 @@ namespace Yatzy
     public class Yatzy
     {
         private readonly int[] _dice;
-
+        private int d1 => _dice[0];
+        private int d2 => _dice[1];
+        private int d3 => _dice[2];
+        private int d4 => _dice[3];
+        private int d5 => _dice[4];
         public Yatzy(int d1, int d2, int d3, int d4, int d5)
         {
             _dice = new[] {d1, d2, d3, d4, d5};
         }
 
-        public int GetScoreChance(int d1, int d2, int d3, int d4, int d5)
+        public int GetScoreChance()
         {
             var dice = CreateDiceArray(d1, d2, d3, d4, d5);
             return dice.Sum();
         }
 
-        public int GetScoreYams(params int[] dice)
+        public int GetScoreYams()
         {
-            var numberDiceWithValue = CountDiceOccurrences(dice);
+            var numberDiceWithValue = CountDiceOccurrences(_dice);
             foreach (var count in numberDiceWithValue)
                 if (count == 5)
                     return 50;

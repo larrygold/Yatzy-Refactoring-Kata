@@ -8,9 +8,9 @@ namespace Yatzy.Test
         public void Chance_scores_sum_of_all_dice()
         {
             var expected = 15;
-            var actual = new Yatzy(2, 3, 4, 5, 1).GetScoreChance(2, 3, 4, 5, 1);
+            var actual = new Yatzy(2, 3, 4, 5, 1).GetScoreChance();
             Assert.Equal(expected, actual);
-            Assert.Equal(16, new Yatzy(3, 3, 4, 5, 1).GetScoreChance(3, 3, 4, 5, 1));
+            Assert.Equal(16, new Yatzy(3, 3, 4, 5, 1).GetScoreChance());
         }
 
         [Fact]
@@ -118,10 +118,10 @@ namespace Yatzy.Test
         public void Yatzy_scores_50()
         {
             var expected = 50;
-            var actual = new Yatzy(4, 4, 4, 4, 4).GetScoreYams(4, 4, 4, 4, 4);
+            var actual = new Yatzy(4, 4, 4, 4, 4).GetScoreYams();
             Assert.Equal(expected, actual);
-            Assert.Equal(50, new Yatzy(6, 6, 6, 6, 6).GetScoreYams(6, 6, 6, 6, 6));
-            Assert.Equal(0, new Yatzy(6, 6, 6, 6, 3).GetScoreYams(6, 6, 6, 6, 3));
+            Assert.Equal(50, new Yatzy(6, 6, 6, 6, 6).GetScoreYams());
+            Assert.Equal(0, new Yatzy(6, 6, 6, 6, 3).GetScoreYams());
         }
     }
 }
