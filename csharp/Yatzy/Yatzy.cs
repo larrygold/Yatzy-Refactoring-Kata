@@ -5,6 +5,8 @@ namespace Yatzy
 {
     public class Dice
     {
+        private int[] _dice;
+
         public Dice(int die1, int die2, int die3, int die4, int die5)
         {
             Die1 = die1;
@@ -12,6 +14,7 @@ namespace Yatzy
             Die3 = die3;
             Die4 = die4;
             Die5 = die5;
+            _dice = new[] {Die1, Die2, Die3, Die4, Die5};
         }
 
         public int Die1 { get; private set; }
@@ -22,7 +25,15 @@ namespace Yatzy
 
         public int GetSum()
         {
-            return Die1 + Die2 + Die3 + Die4 + Die5;
+            return _dice.Sum();
+        }
+
+        public int[] CountOccurrences()
+        {
+            var counts = new int[7];
+            foreach (var die in _dice)
+                counts[die]++;
+            return counts;
         }
     }
 
