@@ -217,10 +217,16 @@ namespace Yatzy
 
         private static bool IsApplicable(int d1, int d2, int d3, int d4, int d5, int numberElementsInGroup, int minimumNumberGroups)
         {
+            var groupsByDescendingValue = GetDescendingGroupsOf(d1, d2, d3, d4, d5, numberElementsInGroup);
+            return groupsByDescendingValue.Count() >= minimumNumberGroups;
+        }
+
+        private static List<int> GetDescendingGroupsOf(int d1, int d2, int d3, int d4, int d5, int numberElementsInGroup)
+        {
             var dice = CreateDiceArray(d1, d2, d3, d4, d5);
             var numberDiceWithValue = CountDiceOccurrences(dice);
             var pairsByDescendingValue = GetDescendingGroupsOf(numberDiceWithValue, numberElementsInGroup);
-            return pairsByDescendingValue.Count() >= minimumNumberGroups;
+            return pairsByDescendingValue;
         }
     }
 }
