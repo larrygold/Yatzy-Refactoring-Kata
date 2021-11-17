@@ -11,16 +11,16 @@ namespace Yatzy
             _dice = new[] {d1, d2, d3, d4, d5};
         }
 
-        public static int Chance(int d1, int d2, int d3, int d4, int d5)
+        public static int GetScoreChance(int d1, int d2, int d3, int d4, int d5)
         {
             var dice = CreateDiceArray(d1, d2, d3, d4, d5);
             return dice.Sum();
         }
 
-        public static int Yams(params int[] dice)
+        public static int GetScoreYams(params int[] dice)
         {
-            var counts = CountDiceOccurrences(dice);
-            foreach (var count in counts)
+            var numberDiceWithValue = CountDiceOccurrences(dice);
+            foreach (var count in numberDiceWithValue)
             {
                 if (count == 5)
                     return 50;
@@ -28,52 +28,43 @@ namespace Yatzy
             return 0;
         }
 
-        public static int Ones(int d1, int d2, int d3, int d4, int d5)
+        public static int GetScoreOnes(int d1, int d2, int d3, int d4, int d5)
         {
             return GetScoreForValue(d1, d2, d3, d4, d5, 1);
         }
 
-        public static int Twos(int d1, int d2, int d3, int d4, int d5)
+        public static int GetScoreTwos(int d1, int d2, int d3, int d4, int d5)
         {
             return GetScoreForValue(d1, d2, d3, d4, d5, 2);
         }
 
-        public static int Threes(int d1, int d2, int d3, int d4, int d5)
+        public static int GetScoreThrees(int d1, int d2, int d3, int d4, int d5)
         {
             return GetScoreForValue(d1, d2, d3, d4, d5, 3);
         }
 
-        public int Fours()
+        public int GetScoreFours()
         {
             return GetScoreForValue(_dice[0], _dice[1], _dice[2], _dice[3], _dice[4], 4);
         }
 
-        public int Fives()
+        public int GetScoreFives()
         {
             return GetScoreForValue(_dice[0], _dice[1], _dice[2], _dice[3], _dice[4], 5);
         }
 
-        public int sixes()
+        public int GetScoreSixes()
         {
-            var sum = 0;
-            for (var at = 0; at < _dice.Length; at++)
-                if (_dice[at] == 6)
-                    sum = sum + 6;
-            return sum;
+            return GetScoreForValue(_dice[0], _dice[1], _dice[2], _dice[3], _dice[4], 6);
         }
 
-        public static int ScorePair(int d1, int d2, int d3, int d4, int d5)
+        public static int GetScorePair(int d1, int d2, int d3, int d4, int d5)
         {
-            var counts = new int[6];
-            counts[d1 - 1]++;
-            counts[d2 - 1]++;
-            counts[d3 - 1]++;
-            counts[d4 - 1]++;
-            counts[d5 - 1]++;
-            int at;
-            for (at = 0; at != 6; at++)
-                if (counts[6 - at - 1] >= 2)
-                    return (6 - at) * 2;
+            var dice = CreateDiceArray(d1, d2, d3, d4, d5);
+            var numberDiceWithValue = CountDiceOccurrences(dice);
+            for (var dieValue = 6; dieValue >= 1; dieValue--)
+                if (numberDiceWithValue[dieValue] >= 2)
+                    return (dieValue) * 2;
             return 0;
         }
 
