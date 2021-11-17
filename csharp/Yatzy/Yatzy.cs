@@ -6,7 +6,7 @@ namespace Yatzy
     public class Yatzy
     {
         private readonly int[] _dice;
-        private int[] _numberDiceWithValue;
+        private readonly int[] _numberDiceWithValue;
 
         public Yatzy(int d1, int d2, int d3, int d4, int d5)
         {
@@ -16,8 +16,7 @@ namespace Yatzy
 
         public int GetScoreChance()
         {
-            var dice = CreateDiceArray();
-            return dice.Sum();
+            return _dice.Sum();
         }
 
         public int GetScoreYams()
@@ -71,14 +70,14 @@ namespace Yatzy
             return 0;
         }
 
-        public int GetScoreFourOfAKind()
-        {
-            return GetScoreGroupsOf(4, 1);
-        }
-
         public int GetScoreThreeOfAKind()
         {
             return GetScoreGroupsOf(3, 1);
+        }
+
+        public int GetScoreFourOfAKind()
+        {
+            return GetScoreGroupsOf(4, 1);
         }
 
         public int GetScoreSmallStraight()
@@ -162,13 +161,11 @@ namespace Yatzy
 
         private int GetScoreForValue(int value)
         {
-            var dice = CreateDiceArray();
             return CountDiceWithValue(value) * value;
         }
 
         private int GetScoreGroupsOf(int numberElementsInGroup, int numberGroups)
         {
-            var dice = CreateDiceArray();
             return GetScoreGroupsOf(_numberDiceWithValue, numberElementsInGroup, numberGroups);
         }
 
@@ -192,7 +189,6 @@ namespace Yatzy
         private int GetScoreStraight(int lowerDieValue,
             int higherDieValue)
         {
-            var dice = CreateDiceArray();
             var sum = 0;
 
             for (var dieValue = lowerDieValue; dieValue <= higherDieValue; dieValue++)
@@ -215,7 +211,6 @@ namespace Yatzy
 
         private List<int> GetDescendingGroupsOf(int numberElementsInGroup)
         {
-            var dice = CreateDiceArray();
             var pairsByDescendingValue = GetDescendingGroupsOf(_numberDiceWithValue, numberElementsInGroup);
             return pairsByDescendingValue;
         }
