@@ -3,20 +3,45 @@ using System.Linq;
 
 namespace Yatzy
 {
+    public class Dice
+    {
+        public Dice(int die1, int die2, int die3, int die4, int die5)
+        {
+            Die1 = die1;
+            Die2 = die2;
+            Die3 = die3;
+            Die4 = die4;
+            Die5 = die5;
+        }
+
+        public int Die1 { get; private set; }
+        public int Die2 { get; private set; }
+        public int Die3 { get; private set; }
+        public int Die4 { get; private set; }
+        public int Die5 { get; private set; }
+
+        public int GetSum()
+        {
+            return Die1 + Die2 + Die3 + Die4 + Die5;
+        }
+    }
+
     public class Yatzy
     {
-        private readonly int[] _dice;
+        private readonly int[] _diceArr;
+        private Dice _dice;
         private readonly int[] _numberDiceWithValue;
 
-        public Yatzy(int d1, int d2, int d3, int d4, int d5)
+        public Yatzy(Dice dice)
         {
-            _dice = new[] {d1, d2, d3, d4, d5};
+            _diceArr = new[] {dice.Die1, dice.Die2, dice.Die3, dice.Die4, dice.Die5};
+            _dice = dice;
             _numberDiceWithValue = CountDiceOccurrences();
         }
 
         public int GetScoreChance()
         {
-            return _dice.Sum();
+            return _dice.GetSum();
         }
 
         public int GetScoreYams()
@@ -98,47 +123,12 @@ namespace Yatzy
                 return GetScoreOnePair() + GetScoreThreeOfAKind();
 
             return 0;
-
-            /*
-            int[] tallies;
-            var _2 = false;
-            int i;
-            var _2_at = 0;
-            var _3 = false;
-            var _3_at = 0;
-
-
-            tallies = new int[6];
-            tallies[d1 - 1] += 1;
-            tallies[d2 - 1] += 1;
-            tallies[d3 - 1] += 1;
-            tallies[d4 - 1] += 1;
-            tallies[d5 - 1] += 1;
-
-            for (i = 0; i != 6; i += 1)
-                if (tallies[i] == 2)
-                {
-                    _2 = true;
-                    _2_at = i + 1;
-                }
-
-            for (i = 0; i != 6; i += 1)
-                if (tallies[i] == 3)
-                {
-                    _3 = true;
-                    _3_at = i + 1;
-                }
-
-            if (_2 && _3)
-                return _2_at * 2 + _3_at * 3;
-            return 0;
-        */
         }
 
         private int[] CountDiceOccurrences()
         {
             var counts = new int[7];
-            foreach (var die in _dice)
+            foreach (var die in _diceArr)
                 counts[die]++;
             return counts;
         }
@@ -151,7 +141,7 @@ namespace Yatzy
         private int CountDiceWithValue(int value)
         {
             var count = 0;
-            foreach (var die in _dice)
+            foreach (var die in _diceArr)
                 if (die == value)
                     count++;
 
