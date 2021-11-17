@@ -1,15 +1,52 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Yatzy
 {
-    public class Dice
+    public class ValueScorer : Score
     {
-        private readonly int[] _dice;
+        private int _dieValue;
+        public ValueScorer(Dice dice, int dieValue) : base(dice)
+        {
+            _dieValue = dieValue;
+        }
+
+        public override int Get()
+        {
+            return CountForValue(_dieValue) * _dieValue;
+        }
+
+        private int CountForValue(int value)
+        {
+            var count = 0;
+            foreach (var die in _dice)
+                if (die == value)
+                    count++;
+
+            return count;
+        }
+
+    }
+
+    public abstract class Score
+    {
+        protected Dice _dice;
+        public Score(Dice dice)
+        {
+            _dice = dice;
+        }
+
+        public abstract int Get();
+    }
+
+    public class Dice : IEnumerable<int>
+    {
+        private readonly List<int> _dice;
 
         public Dice(int die1, int die2, int die3, int die4, int die5)
         {
-            _dice = new[] {die1, die2, die3, die4, die5};
+            _dice = new List<int> () {die1, die2, die3, die4, die5};
         }
 
         public int GetSum()
@@ -47,13 +84,20 @@ namespace Yatzy
             return groups;
         }
 
+        public IEnumerator<int> GetEnumerator()
+        {
+            return _dice.GetEnumerator();
+        }
 
-
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
     }
 
     public class Yatzy
     {
-        private Dice _dice;
+        private readonly Dice _dice;
 
         public Yatzy(Dice dice)
         {
@@ -75,7 +119,7 @@ namespace Yatzy
 
         public int GetScoreOnes()
         {
-            return GetScoreForValue(1);
+            return new ValueScorer(_dice, 1).Get();
         }
 
         public int GetScoreTwos()
@@ -179,6 +223,5 @@ namespace Yatzy
             var groupsByDescendingValue = _dice.GetDescendingGroups(numberElementsInGroup);
             return groupsByDescendingValue.Count() >= minimumNumberGroups;
         }
-
     }
 }
