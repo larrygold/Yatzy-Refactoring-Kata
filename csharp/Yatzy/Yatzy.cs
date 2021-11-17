@@ -18,88 +18,88 @@ namespace Yatzy
 
         public int GetScoreChance()
         {
-            var dice = CreateDiceArray(d1, d2, d3, d4, d5);
+            var dice = CreateDiceArray();
             return dice.Sum();
         }
 
         public int GetScoreYams()
         {
-            var numberDiceWithValue = CountDiceOccurrences(_dice);
+            var numberDiceWithValue = CountDiceOccurrences();
             foreach (var count in numberDiceWithValue)
                 if (count == 5)
                     return 50;
             return 0;
         }
 
-        public int GetScoreOnes(int d1, int d2, int d3, int d4, int d5)
+        public int GetScoreOnes()
         {
-            return GetScoreForValue(d1, d2, d3, d4, d5, 1);
+            return GetScoreForValue(1);
         }
 
-        public int GetScoreTwos(int d1, int d2, int d3, int d4, int d5)
+        public int GetScoreTwos()
         {
-            return GetScoreForValue(d1, d2, d3, d4, d5, 2);
+            return GetScoreForValue(2);
         }
 
-        public int GetScoreThrees(int d1, int d2, int d3, int d4, int d5)
+        public int GetScoreThrees()
         {
-            return GetScoreForValue(d1, d2, d3, d4, d5, 3);
+            return GetScoreForValue(3);
         }
 
         public int GetScoreFours()
         {
-            return GetScoreForValue(_dice[0], _dice[1], _dice[2], _dice[3], _dice[4], 4);
+            return GetScoreForValue(4);
         }
 
         public int GetScoreFives()
         {
-            return GetScoreForValue(_dice[0], _dice[1], _dice[2], _dice[3], _dice[4], 5);
+            return GetScoreForValue(5);
         }
 
         public int GetScoreSixes()
         {
-            return GetScoreForValue(_dice[0], _dice[1], _dice[2], _dice[3], _dice[4], 6);
+            return GetScoreForValue(6);
         }
 
-        public int GetScoreOnePair(int d1, int d2, int d3, int d4, int d5)
+        public int GetScoreOnePair()
         {
-            return GetScoreGroupsOf(d1, d2, d3, d4, d5, 2, 1);
+            return GetScoreGroupsOf(2, 1);
         }
 
-        public int GetScoreTwoPairs(int d1, int d2, int d3, int d4, int d5)
+        public int GetScoreTwoPairs()
         {
-            if (IsApplicable(d1, d2, d3, d4, d5, 2, 2))
-                return GetScoreGroupsOf(d1, d2, d3, d4, d5, 2, 2);
+            if (IsApplicable(2, 2))
+                return GetScoreGroupsOf(2, 2);
 
             return 0;
         }
 
-        public int GetScoreFourOfAKind(int d1, int d2, int d3, int d4, int d5)
+        public int GetScoreFourOfAKind()
         {
-            return GetScoreGroupsOf(d1, d2, d3, d4, d5, 4, 1);
+            return GetScoreGroupsOf(4, 1);
         }
 
-        public int GetScoreThreeOfAKind(int d1, int d2, int d3, int d4, int d5)
+        public int GetScoreThreeOfAKind()
         {
-            return GetScoreGroupsOf(d1, d2, d3, d4, d5, 3, 1);
+            return GetScoreGroupsOf(3, 1);
         }
 
-        public int GetScoreSmallStraight(int d1, int d2, int d3, int d4, int d5)
+        public int GetScoreSmallStraight()
         {
-            return GetScoreStraight(d1, d2, d3, d4, d5, 1, 5);
+            return GetScoreStraight(1, 5);
         }
 
-        public int GetScoreLargeStraight(int d1, int d2, int d3, int d4, int d5)
+        public int GetScoreLargeStraight()
         {
-            return GetScoreStraight(d1, d2, d3, d4, d5, 2, 6);
+            return GetScoreStraight(2, 6);
         }
 
-        public int GetScoreFullHouse(int d1, int d2, int d3, int d4, int d5)
+        public int GetScoreFullHouse()
         {
-            if (IsApplicable(d1, d2, d3, d4, d5, 2, 1)
-                && IsApplicable(d1, d2, d3, d4, d5, 3, 1)
+            if (IsApplicable(2, 1)
+                && IsApplicable(3, 1)
             )
-                return GetScoreOnePair(d1, d2, d3, d4, d5) + GetScoreThreeOfAKind(d1, d2, d3, d4, d5);
+                return GetScoreOnePair() + GetScoreThreeOfAKind();
 
             return 0;
 
@@ -139,41 +139,40 @@ namespace Yatzy
         */
         }
 
-        private int[] CountDiceOccurrences(int[] dice)
+        private int[] CountDiceOccurrences()
         {
             var counts = new int[7];
-            foreach (var die in dice)
+            foreach (var die in _dice)
                 counts[die]++;
             return counts;
         }
 
-        private int[] CreateDiceArray(int d1, int d2, int d3, int d4, int d5)
+        private int[] CreateDiceArray()
         {
             var dice = new[] {d1, d2, d3, d4, d5};
             return dice;
         }
 
-        private int CountDiceWithValue(int[] dice, int value)
+        private int CountDiceWithValue(int value)
         {
             var count = 0;
-            foreach (var die in dice)
+            foreach (var die in _dice)
                 if (die == value)
                     count++;
 
             return count;
         }
 
-        private int GetScoreForValue(int d1, int d2, int d3, int d4, int d5, int dieValue)
+        private int GetScoreForValue(int value)
         {
-            var dice = CreateDiceArray(d1, d2, d3, d4, d5);
-            return CountDiceWithValue(dice, dieValue) * dieValue;
+            var dice = CreateDiceArray();
+            return CountDiceWithValue(value) * value;
         }
 
-        private int GetScoreGroupsOf(int d1, int d2, int d3, int d4, int d5,
-            int numberElementsInGroup, int numberGroups)
+        private int GetScoreGroupsOf(int numberElementsInGroup, int numberGroups)
         {
-            var dice = CreateDiceArray(d1, d2, d3, d4, d5);
-            var numberDiceWithValue = CountDiceOccurrences(dice);
+            var dice = CreateDiceArray();
+            var numberDiceWithValue = CountDiceOccurrences();
             return GetScoreGroupsOf(numberDiceWithValue, numberElementsInGroup, numberGroups);
         }
 
@@ -194,11 +193,11 @@ namespace Yatzy
             return groups;
         }
 
-        private int GetScoreStraight(int d1, int d2, int d3, int d4, int d5, int lowerDieValue,
+        private int GetScoreStraight(int lowerDieValue,
             int higherDieValue)
         {
-            var dice = CreateDiceArray(d1, d2, d3, d4, d5);
-            var numberDiceWithValue = CountDiceOccurrences(dice);
+            var dice = CreateDiceArray();
+            var numberDiceWithValue = CountDiceOccurrences();
             var sum = 0;
 
             for (var dieValue = lowerDieValue; dieValue <= higherDieValue; dieValue++)
@@ -212,18 +211,17 @@ namespace Yatzy
             return sum;
         }
 
-        private bool IsApplicable(int d1, int d2, int d3, int d4, int d5, int numberElementsInGroup,
+        private bool IsApplicable(int numberElementsInGroup,
             int minimumNumberGroups)
         {
-            var groupsByDescendingValue = GetDescendingGroupsOf(d1, d2, d3, d4, d5, numberElementsInGroup);
+            var groupsByDescendingValue = GetDescendingGroupsOf(numberElementsInGroup);
             return groupsByDescendingValue.Count() >= minimumNumberGroups;
         }
 
-        private List<int> GetDescendingGroupsOf(int d1, int d2, int d3, int d4, int d5,
-            int numberElementsInGroup)
+        private List<int> GetDescendingGroupsOf(int numberElementsInGroup)
         {
-            var dice = CreateDiceArray(d1, d2, d3, d4, d5);
-            var numberDiceWithValue = CountDiceOccurrences(dice);
+            var dice = CreateDiceArray();
+            var numberDiceWithValue = CountDiceOccurrences();
             var pairsByDescendingValue = GetDescendingGroupsOf(numberDiceWithValue, numberElementsInGroup);
             return pairsByDescendingValue;
         }
