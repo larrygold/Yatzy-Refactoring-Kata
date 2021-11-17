@@ -6,10 +6,12 @@ namespace Yatzy
     public class Yatzy
     {
         private readonly int[] _dice;
+        private int[] _numberDiceWithValue;
 
         public Yatzy(int d1, int d2, int d3, int d4, int d5)
         {
             _dice = new[] {d1, d2, d3, d4, d5};
+            _numberDiceWithValue = CountDiceOccurrences();
         }
 
         public int GetScoreChance()
@@ -20,8 +22,7 @@ namespace Yatzy
 
         public int GetScoreYams()
         {
-            var numberDiceWithValue = CountDiceOccurrences();
-            foreach (var count in numberDiceWithValue)
+            foreach (var count in _numberDiceWithValue)
                 if (count == 5)
                     return 50;
             return 0;
@@ -168,8 +169,7 @@ namespace Yatzy
         private int GetScoreGroupsOf(int numberElementsInGroup, int numberGroups)
         {
             var dice = CreateDiceArray();
-            var numberDiceWithValue = CountDiceOccurrences();
-            return GetScoreGroupsOf(numberDiceWithValue, numberElementsInGroup, numberGroups);
+            return GetScoreGroupsOf(_numberDiceWithValue, numberElementsInGroup, numberGroups);
         }
 
         private int GetScoreGroupsOf(int[] numberDiceWithValue, int numberElementsInGroup, int numberGroups)
@@ -193,12 +193,11 @@ namespace Yatzy
             int higherDieValue)
         {
             var dice = CreateDiceArray();
-            var numberDiceWithValue = CountDiceOccurrences();
             var sum = 0;
 
             for (var dieValue = lowerDieValue; dieValue <= higherDieValue; dieValue++)
             {
-                if (numberDiceWithValue[dieValue] != 1)
+                if (_numberDiceWithValue[dieValue] != 1)
                     return 0;
 
                 sum += dieValue;
@@ -217,8 +216,7 @@ namespace Yatzy
         private List<int> GetDescendingGroupsOf(int numberElementsInGroup)
         {
             var dice = CreateDiceArray();
-            var numberDiceWithValue = CountDiceOccurrences();
-            var pairsByDescendingValue = GetDescendingGroupsOf(numberDiceWithValue, numberElementsInGroup);
+            var pairsByDescendingValue = GetDescendingGroupsOf(_numberDiceWithValue, numberElementsInGroup);
             return pairsByDescendingValue;
         }
     }
