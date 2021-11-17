@@ -72,50 +72,25 @@ namespace Yatzy
         public static int FourOfAKind(int d1, int d2, int d3, int d4, int d5)
         {
             return GetScoreGroupsOf(d1, d2, d3, d4, d5, 4, 1);
-            // int[] tallies;
-            // tallies = new int[6];
-            // tallies[d1 - 1]++;
-            // tallies[d2 - 1]++;
-            // tallies[d3 - 1]++;
-            // tallies[d4 - 1]++;
-            // tallies[d5 - 1]++;
-            // for (var i = 0; i < 6; i++)
-            //     if (tallies[i] >= 4)
-            //         return (i + 1) * 4;
-            // return 0;
         }
 
         public static int ThreeOfAKind(int d1, int d2, int d3, int d4, int d5)
         {
-            int[] t;
-            t = new int[6];
-            t[d1 - 1]++;
-            t[d2 - 1]++;
-            t[d3 - 1]++;
-            t[d4 - 1]++;
-            t[d5 - 1]++;
-            for (var i = 0; i < 6; i++)
-                if (t[i] >= 3)
-                    return (i + 1) * 3;
-            return 0;
+            return GetScoreGroupsOf(d1, d2, d3, d4, d5, 3, 1);
         }
 
         public static int SmallStraight(int d1, int d2, int d3, int d4, int d5)
         {
-            int[] tallies;
-            tallies = new int[6];
-            tallies[d1 - 1] += 1;
-            tallies[d2 - 1] += 1;
-            tallies[d3 - 1] += 1;
-            tallies[d4 - 1] += 1;
-            tallies[d5 - 1] += 1;
-            if (tallies[0] == 1 &&
-                tallies[1] == 1 &&
-                tallies[2] == 1 &&
-                tallies[3] == 1 &&
-                tallies[4] == 1)
-                return 15;
-            return 0;
+            var dice = CreateDiceArray(d1, d2, d3, d4, d5);
+            var numberDiceWithValue = CountDiceOccurrences(dice);
+
+            for (var dieValue = 1; dieValue <= 5; dieValue++)
+            {
+                if (numberDiceWithValue[dieValue] != 1)
+                    return 0;
+            }
+
+            return 15;
         }
 
         public static int LargeStraight(int d1, int d2, int d3, int d4, int d5)
