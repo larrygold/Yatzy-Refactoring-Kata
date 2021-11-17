@@ -1,28 +1,20 @@
+using System.Linq;
+
 namespace Yatzy
 {
     public class Yatzy
     {
-        protected int[] dice;
+        private readonly int[] _dice;
 
-        public Yatzy(int d1, int d2, int d3, int d4, int _5)
+        public Yatzy(int d1, int d2, int d3, int d4, int d5)
         {
-            dice = new int[5];
-            dice[0] = d1;
-            dice[1] = d2;
-            dice[2] = d3;
-            dice[3] = d4;
-            dice[4] = _5;
+            _dice = new[] {d1, d2, d3, d4, d5};
         }
 
         public static int Chance(int d1, int d2, int d3, int d4, int d5)
         {
-            var total = 0;
-            total += d1;
-            total += d2;
-            total += d3;
-            total += d4;
-            total += d5;
-            return total;
+            var dice = new[] {d1, d2, d3, d4, d5};
+            return dice.Sum();
         }
 
         public static int yatzy(params int[] dice)
@@ -77,7 +69,7 @@ namespace Yatzy
             int sum;
             sum = 0;
             for (var at = 0; at != 5; at++)
-                if (dice[at] == 4)
+                if (_dice[at] == 4)
                     sum += 4;
             return sum;
         }
@@ -86,8 +78,8 @@ namespace Yatzy
         {
             var s = 0;
             int i;
-            for (i = 0; i < dice.Length; i++)
-                if (dice[i] == 5)
+            for (i = 0; i < _dice.Length; i++)
+                if (_dice[i] == 5)
                     s = s + 5;
             return s;
         }
@@ -95,8 +87,8 @@ namespace Yatzy
         public int sixes()
         {
             var sum = 0;
-            for (var at = 0; at < dice.Length; at++)
-                if (dice[at] == 6)
+            for (var at = 0; at < _dice.Length; at++)
+                if (_dice[at] == 6)
                     sum = sum + 6;
             return sum;
         }
